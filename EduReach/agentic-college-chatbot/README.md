@@ -110,7 +110,96 @@ User enters phone number
 # 📁 Project Structure
 
 ```
-├── server/ │ ├── knowledge-base/ │ │ └── edureach-knowledge.txt ← Knowledge base text file │ ├── src/ │ │ ├── config/ │ │ │ └── database.config.ts ← MongoDB connection (Part 1) │ │ ├── controllers/ │ │ │ ├── auth.controller.ts ← Register, Login, GetMe (Part 1) │ │ │ ├── chat.controller.ts ← Chat message handler (NEW) │ │ │ └── vapi.controller.ts ← Vapi call handler (NEW) │ │ ├── middleware/ │ │ │ ├── auth.middleware.ts ← JWT verification (Part 1) │ │ │ └── error-handler.middleware.ts ← Error handling (Part 1) │ │ ├── models/ │ │ │ ├── user.model.ts ← User schema (Part 1) │ │ │ └── knowledge-doc.model.ts ← Knowledge doc schema (NEW) │ │ ├── routes/ │ │ │ ├── auth.routes.ts ← Auth routes (Part 1) │ │ │ ├── chat.routes.ts ← Chat routes (NEW) │ │ │ └── vapi.routes.ts ← Vapi routes (NEW) │ │ ├── services/ │ │ │ ├── rag.service.ts ← RAG pipeline + agent (NEW) │ │ │ └── vapi.service.ts ← Vapi API integration (NEW) │ │ ├── utils/ │ │ │ ├── jwt.util.ts ← JWT sign/verify (Part 1) │ │ │ └── password.util.ts ← Hash/compare (Part 1) │ │ ├── app.ts ← Express app (UPDATED) │ │ └── server.ts ← Server entry (UPDATED) │ ├── .env ← Environment variables (UPDATED) │ ├── package.json │ └── tsconfig.json │ ├── client/ │ ├── src/ │ │ ├── components/ │ │ │ ├── Navbar.tsx ← Navigation (Part 1) │ │ │ ├── HeroSection.tsx ← Hero banner (Part 1) │ │ │ ├── AboutSection.tsx ← About section (Part 1) │ │ │ ├── AchievementsSection.tsx ← Stats counter (Part 1) │ │ │ ├── CoursesSection.tsx ← Course cards (Part 1) │ │ │ ├── QuotesSection.tsx ← Testimonials (Part 1) │ │ │ ├── MentorsSection.tsx ← Faculty cards (Part 1) │ │ │ ├── StudentLifeSection.tsx ← Gallery (Part 1) │ │ │ ├── HiringStatsSection.tsx ← Placement stats (Part 1) │ │ │ ├── EventsGallery.tsx ← Events (Part 1) │ │ │ ├── CounselorCTA.tsx ← Call CTA (Part 1) │ │ │ ├── Footer.tsx ← Footer (Part 1) │ │ │ ├── SignupPopup.tsx ← Scroll popup (Part 1) │ │ │ ├── ChatDrawer.tsx ← Chat interface (NEW) │ │ │ ├── FloatingChatButton.tsx ← Chat button (NEW) │ │ │ └── CallPopup.tsx ← Call form (NEW — replaces placeholder) │ │ ├── context/ │ │ │ └── AuthContext.tsx ← Auth state (Part 1) │ │ ├── data/ │ │ │ └── content.ts ← Static content (UPDATED) │ │ ├── pages/ │ │ │ ├── HomePage.tsx ← Main page (Part 1) │ │ │ ├── LoginPage.tsx ← Login form (Part 1) │ │ │ └── SignupPage.tsx ← Signup form (Part 1) │ │ ├── services/ │ │ │ ├── api.ts ← Axios instance (Part 1) │ │ │ ├── auth.service.ts ← Auth API calls (Part 1) │ │ │ ├── chat.service.ts ← Chat API calls (NEW) │ │ │ └── vapi.service.ts ← Vapi API calls (NEW) │ │ ├── App.tsx ← App root (UPDATED) │ │ ├── main.tsx ← Entry point (Part 1) │ │ └── index.css ← Tailwind styles (Part 1) │ ├── package.json │ └── vite.config.ts │ └── README.md
+```bash
+edureach/
+├── server/
+│   ├── knowledge-base/
+│   │   └── edureach-knowledge.txt          # Knowledge base text file
+│   │
+│   ├── src/
+│   │   ├── config/
+│   │   │   └── database.config.ts          # MongoDB connection
+│   │   │
+│   │   ├── controllers/
+│   │   │   ├── auth.controller.ts          # Register, Login, GetMe
+│   │   │   ├── chat.controller.ts          # Chat message handler
+│   │   │   └── vapi.controller.ts          # Vapi call handler
+│   │   │
+│   │   ├── middleware/
+│   │   │   ├── auth.middleware.ts          # JWT verification
+│   │   │   └── error-handler.middleware.ts # Error handling
+│   │   │
+│   │   ├── models/
+│   │   │   ├── user.model.ts               # User schema
+│   │   │   └── knowledge-doc.model.ts      # Knowledge document schema
+│   │   │
+│   │   ├── routes/
+│   │   │   ├── auth.routes.ts              # Auth routes
+│   │   │   ├── chat.routes.ts              # Chat routes
+│   │   │   └── vapi.routes.ts              # Vapi routes
+│   │   │
+│   │   ├── services/
+│   │   │   ├── rag.service.ts              # RAG pipeline + agent
+│   │   │   └── vapi.service.ts             # Vapi API integration
+│   │   │
+│   │   ├── utils/
+│   │   │   ├── jwt.util.ts                 # JWT sign/verify
+│   │   │   └── password.util.ts            # Password hash/compare
+│   │   │
+│   │   ├── app.ts                          # Express app setup
+│   │   └── server.ts                       # Server entry point
+│   │
+│   ├── .env                                # Environment variables
+│   ├── package.json
+│   └── tsconfig.json
+│
+├── client/
+│   ├── src/
+│   │   ├── components/
+│   │   │   ├── Navbar.tsx                  # Navigation
+│   │   │   ├── HeroSection.tsx             # Hero banner
+│   │   │   ├── AboutSection.tsx            # About section
+│   │   │   ├── AchievementsSection.tsx     # Stats counter
+│   │   │   ├── CoursesSection.tsx          # Course cards
+│   │   │   ├── QuotesSection.tsx           # Testimonials
+│   │   │   ├── MentorsSection.tsx          # Faculty cards
+│   │   │   ├── StudentLifeSection.tsx      # Gallery
+│   │   │   ├── HiringStatsSection.tsx      # Placement stats
+│   │   │   ├── EventsGallery.tsx           # Events
+│   │   │   ├── CounselorCTA.tsx            # Call CTA
+│   │   │   ├── Footer.tsx                  # Footer
+│   │   │   ├── SignupPopup.tsx             # Scroll popup
+│   │   │   ├── ChatDrawer.tsx              # Chat interface
+│   │   │   ├── FloatingChatButton.tsx      # Chat button
+│   │   │   └── CallPopup.tsx               # Call form
+│   │   │
+│   │   ├── context/
+│   │   │   └── AuthContext.tsx             # Auth state management
+│   │   │
+│   │   ├── data/
+│   │   │   └── content.ts                 # Static content
+│   │   │
+│   │   ├── pages/
+│   │   │   ├── HomePage.tsx               # Main page
+│   │   │   ├── LoginPage.tsx              # Login form
+│   │   │   └── SignupPage.tsx             # Signup form
+│   │   │
+│   │   ├── services/
+│   │   │   ├── api.ts                     # Axios instance
+│   │   │   ├── auth.service.ts            # Auth API calls
+│   │   │   ├── chat.service.ts            # Chat API calls
+│   │   │   └── vapi.service.ts            # Vapi API calls
+│   │   │
+│   │   ├── App.tsx                        # App root
+│   │   ├── main.tsx                       # Entry point
+│   │   └── index.css                      # Tailwind styles
+│   │
+│   ├── package.json
+│   └── vite.config.ts
+│
+└── README.md
+```
+
 ---
 
 # ⚙️ Backend Overview
