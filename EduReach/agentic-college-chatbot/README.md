@@ -110,7 +110,7 @@ User enters phone number
 # 📁 Project Structure
 
 ```
-```bash
+
 edureach/
 ├── server/
 │   ├── knowledge-base/
